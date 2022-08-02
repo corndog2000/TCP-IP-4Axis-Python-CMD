@@ -142,7 +142,7 @@ class DobotApi:
             print(text)
 
     def send_data(self, string):
-        self.log(f"Send to 192.168.1.6:{self.port}: {string}")
+        self.log(f"Send to 169.254.2.6:{self.port}: {string}")
         self.socket_dobot.send(str.encode(string, 'utf-8'))
 
     def wait_reply(self):
@@ -151,7 +151,7 @@ class DobotApi:
         """
         data = self.socket_dobot.recv(1024)
         data_str = str(data, encoding="utf-8")
-        self.log(f'Receive from 192.168.1.6:{self.port}: {data_str}')
+        self.log(f'Receive from 169.254.2.6:{self.port}: {data_str}')
         return data_str
 
     def close(self):
@@ -516,7 +516,7 @@ class DobotApiMove(DobotApi):
         # example： MovJIO(0,50,0,0,0,0,(0,50,1,0),(1,1,2,1))
         string = "MovJIO({:f},{:f},{:f},{:f},{:f},{:f}".format(
             x, y, z, a, b, c)
-        self.log("Send to 192.168.1.6:29999:" + string)
+        self.log("Send to 169.254.2.6:29999:" + string)
         print(type(dynParams), dynParams)
         for params in dynParams:
             print(type(params), params)

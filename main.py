@@ -8,7 +8,7 @@ current_actual = None
 
 def connect_robot():
     try:
-        ip = "192.168.1.6"
+        ip = "169.254.2.6"
         dashboard_p = 29999
         move_p = 30003
         feed_p = 30004
@@ -64,16 +64,22 @@ def wait_arrive(point_list):
 if __name__ == '__main__':
     dashboard, move, feed = connect_robot()
     print("开始使能...")
+    #dashboard.ResetRobot()
+    dashboard.ClearError()
     dashboard.EnableRobot()
     print("完成使能:)")
     feed_thread = threading.Thread(target=get_feed, args=(feed,))
     feed_thread.setDaemon(True)
     feed_thread.start()
     print("循环执行...")
-    point_a = [20, 280, -60, 200]
-    point_b = [160, 260, -30, 170]
+    point_a = [10, -290, 100, 30]
+    point_b = [27, -370, -43, 120]
+    dashboard.SpeedFactor(10)
     while True:   
         run_point(move, point_a)
         wait_arrive(point_a)
+        dashboard.DO(1,1)
+
         run_point(move, point_b)
         wait_arrive(point_b)
+        dashboard.DO(1, 0)
