@@ -1,6 +1,5 @@
 import socket
 from threading import Timer
-from tkinter import Text, END
 import datetime
 import numpy as np
 
@@ -118,9 +117,6 @@ class DobotApi:
         self.ip = ip
         self.port = port
         self.socket_dobot = 0
-        self.text_log: Text = None
-        if args:
-            self.text_log = args[0]
 
         if self.port == 29999 or self.port == 30003 or self.port == 30004:
             try:
@@ -135,11 +131,7 @@ class DobotApi:
                 f"Connect to dashboard server need use port {self.port} !")
 
     def log(self, text):
-        if self.text_log:
-            date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S ")
-            self.text_log.insert(END, date+text+"\n")
-        else:
-            print(text)
+        print(text)
 
     def send_data(self, string):
         self.log(f"Send to 169.254.2.6:{self.port}: {string}")
